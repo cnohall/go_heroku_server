@@ -6,8 +6,7 @@ import (
 	"net/http"
 	"encoding/json"
     "io/ioutil"
-	"os"
-	"github.com/gin-gonic/gin"
+    "os"
 
 )
 
@@ -45,28 +44,15 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(cats)
 }
 
-// func handleRequests() {
-// 	http.HandleFunc("/", homePage)
-// 	log.Fatal(http.ListenAndServe(":8081",nil))
-// }
+func handleRequests() {
+	http.HandleFunc("/", homePage)
+	log.Fatal(http.ListenAndServe(":8080",nil))
+}
 
 func main() {
-	port := os.Getenv("PORT")
+	handleRequests()
 
-	if port == "" {
-		log.Fatal("$PORT must be set")
-	}
 
-	router := gin.New()
-	router.Use(gin.Logger())
-	// router.LoadHTMLGlob("templates/*.tmpl.html")
-	// router.Static("/static", "static")
-
-	router.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, homePage, nil)
-	})
-
-	router.Run(":" + port)
 
 }
 
